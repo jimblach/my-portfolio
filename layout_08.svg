@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="730" viewBox="0 0 1000 730">
+<rect width="1000" height="730" fill="#0c0c0c"/>
+<text x="500" y="24" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">08 — СТУПЕНИ · каждая следующая ячейка ниже предыдущей на 70px</text>
+
+<!-- Step 1: M1 top-left, starts highest y=38 -->
+<rect x="40" y="38" width="320" height="180" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="200" y="128" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M1 · 320×180</text>
+
+<!-- Step 2: TEXT fills below M1, starts at y=108 -->
+<rect x="40" y="222" width="320" height="160" fill="#0f0f22" stroke="#7777ee" stroke-width="1.5"/>
+<text x="200" y="296" font-family="monospace" font-size="11" fill="#aaaaff" text-anchor="middle" dominant-baseline="middle">TEXT · ≈30 слов</text>
+
+<!-- Step 2: M2 starts at y=108 (70px lower than M1) -->
+<rect x="364" y="108" width="256" height="144" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="492" y="180" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M2 · 256×144</text>
+
+<!-- Step 3: AUTO 9:16 starts at y=178 -->
+<rect x="364" y="256" width="144" height="256" fill="#141000" stroke="#cc9900" stroke-width="1.5"/>
+<text x="436" y="376" font-family="monospace" font-size="11" fill="#ddbb44" text-anchor="middle" dominant-baseline="middle">AUTO</text>
+<text x="436" y="392" font-family="monospace" font-size="9" fill="#664" text-anchor="middle">144×256 · 9:16</text>
+
+<!-- Step 3: M3 starts at y=178 (70px lower than M2) -->
+<rect x="512" y="178" width="256" height="144" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="640" y="250" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M3 · 256×144</text>
+
+<!-- Step 4: M4 starts at y=248 (70px lower) -->
+<rect x="512" y="326" width="256" height="144" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="640" y="398" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M4 · 256×144</text>
+
+<!-- Step 5: M5 starts at y=318 -->
+<rect x="772" y="38" width="188" height="438" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="866" y="257" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M5</text>
+<text x="866" y="275" font-family="monospace" font-size="9" fill="#555" text-anchor="middle">188×438</text>
+<text x="866" y="291" font-family="monospace" font-size="9" fill="#555" text-anchor="middle">(не 16:9 — заполнитель)</text>
+
+<!-- Bottom zone -->
+<!-- WIDE: bottom-left -->
+<rect x="40" y="386" width="320" height="180" fill="#0c1310" stroke="#229966" stroke-width="1.5"/>
+<text x="200" y="476" font-family="monospace" font-size="11" fill="#44bb88" text-anchor="middle" dominant-baseline="middle">WIDE · 320×180</text>
+
+<!-- M6: bottom center-left -->
+<rect x="40" y="570" width="320" height="108" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="200" y="624" font-family="monospace" font-size="10" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M6</text>
+
+<!-- M7: bottom center-right sweeps across -->
+<rect x="364" y="516" width="404" height="174" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="566" y="603" font-family="monospace" font-size="12" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M7 · 404×174</text>
+
+<g font-family="monospace" font-size="9" fill="#444">
+  <rect x="40" y="706" width="9" height="9" fill="#d6ac48"/><text x="54" y="714">16:9</text>
+  <rect x="105" y="706" width="9" height="9" fill="#7777ee"/><text x="119" y="714">TEXT</text>
+  <rect x="175" y="706" width="9" height="9" fill="#cc9900"/><text x="189" y="714">AUTO 9:16</text>
+  <rect x="290" y="706" width="9" height="9" fill="#229966"/><text x="304" y="714">WIDE</text>
+</g>
+</svg>

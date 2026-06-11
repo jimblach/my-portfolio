@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="730" viewBox="0 0 1000 730">
+<rect width="1000" height="730" fill="#0c0c0c"/>
+<text x="500" y="24" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">03 — ТЯЖЁЛЫЙ НИЗ · мелкие сверху, большие снизу</text>
+
+<!-- Row 1: three small cells at different heights -->
+<!-- M1: 256×144 · 16:9 · left, starts higher -->
+<rect x="40" y="38" width="256" height="144" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="168" y="110" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M1 · 256×144</text>
+
+<!-- AUTO: 144×256 · 9:16 · tall thin, between M1 and M2 -->
+<rect x="300" y="38" width="144" height="256" fill="#141000" stroke="#cc9900" stroke-width="1.5"/>
+<text x="372" y="158" font-family="monospace" font-size="11" fill="#ddbb44" text-anchor="middle" dominant-baseline="middle">AUTO</text>
+<text x="372" y="173" font-family="monospace" font-size="9" fill="#664" text-anchor="middle">144×256</text>
+
+<!-- M2: 320×180 · 16:9 · starts 36px lower -->
+<rect x="448" y="74" width="320" height="180" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="608" y="164" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M2 · 320×180</text>
+
+<!-- M3: 192×108 · 16:9 · far right, starts at top -->
+<rect x="772" y="38" width="188" height="108" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="866" y="92" font-family="monospace" font-size="10" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M3 · 188×106</text>
+
+<!-- TEXT: fills below M1, left of AUTO -->
+<rect x="40" y="186" width="256" height="164" fill="#0f0f22" stroke="#7777ee" stroke-width="1.5"/>
+<text x="168" y="262" font-family="monospace" font-size="11" fill="#aaaaff" text-anchor="middle" dominant-baseline="middle">TEXT · ≈30 слов</text>
+
+<!-- WIDE: right zone gap fill -->
+<rect x="772" y="150" width="188" height="144" fill="#0c1310" stroke="#229966" stroke-width="1.5"/>
+<text x="866" y="218" font-family="monospace" font-size="10" fill="#44bb88" text-anchor="middle" dominant-baseline="middle">WIDE</text>
+
+<!-- Row 2-3: BIG cells dominate -->
+<!-- M4: 480×270 · 16:9 · large center -->
+<rect x="40" y="354" width="480" height="270" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="280" y="489" font-family="monospace" font-size="13" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M4 · 480×270</text>
+
+<!-- M5: 384×216 · 16:9 · right mid, starts 38px lower -->
+<rect x="524" y="298" width="436" height="162" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="742" y="379" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M5 · 436×162</text>
+
+<!-- M6: 448×252 · 16:9 · bottom-right -->
+<rect x="524" y="464" width="436" height="245" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="742" y="587" font-family="monospace" font-size="12" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M6 · 436×245</text>
+
+<!-- M7: 480×270 · 16:9 · bottom-left big -->
+<rect x="40" y="628" width="480" height="72" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="280" y="665" font-family="monospace" font-size="10" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M7 (продолжается)</text>
+
+<g font-family="monospace" font-size="9" fill="#444">
+  <rect x="40" y="706" width="9" height="9" fill="#d6ac48"/><text x="54" y="714">16:9</text>
+  <rect x="105" y="706" width="9" height="9" fill="#7777ee"/><text x="119" y="714">TEXT</text>
+  <rect x="175" y="706" width="9" height="9" fill="#cc9900"/><text x="189" y="714">AUTO 9:16</text>
+  <rect x="290" y="706" width="9" height="9" fill="#229966"/><text x="304" y="714">WIDE</text>
+</g>
+</svg>

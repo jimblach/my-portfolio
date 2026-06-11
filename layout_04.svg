@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="730" viewBox="0 0 1000 730">
+<rect width="1000" height="730" fill="#0c0c0c"/>
+<text x="500" y="24" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">04 — ЛЕВЫЙ ЯКОРЬ · большая левая + хаос справа</text>
+
+<!-- M1: 384×216 · 16:9 · left top -->
+<rect x="40" y="38" width="384" height="216" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="232" y="146" font-family="monospace" font-size="12" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M1 · 384×216</text>
+
+<!-- TEXT: left mid -->
+<rect x="40" y="258" width="384" height="160" fill="#0f0f22" stroke="#7777ee" stroke-width="1.5"/>
+<text x="232" y="332" font-family="monospace" font-size="11" fill="#aaaaff" text-anchor="middle" dominant-baseline="middle">TEXT · ≈30 слов</text>
+
+<!-- M2: 384×216 · 16:9 · left bottom -->
+<rect x="40" y="422" width="384" height="216" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="232" y="530" font-family="monospace" font-size="12" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M2 · 384×216</text>
+
+<!-- Right side chaos: cells at very different heights -->
+<!-- M3: 256×144 · 16:9 · top right, starts 58px lower than M1 -->
+<rect x="428" y="96" width="256" height="144" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="556" y="168" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M3 · 256×144</text>
+
+<!-- M4: 192×108 · 16:9 · tiny far right top -->
+<rect x="688" y="38" width="272" height="153" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="824" y="115" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M4 · 272×153</text>
+
+<!-- AUTO: 180×320 · 9:16 · tall right center -->
+<rect x="428" y="244" width="162" height="288" fill="#141000" stroke="#cc9900" stroke-width="1.5"/>
+<text x="509" y="380" font-family="monospace" font-size="11" fill="#ddbb44" text-anchor="middle" dominant-baseline="middle">AUTO</text>
+<text x="509" y="396" font-family="monospace" font-size="9" fill="#664" text-anchor="middle">162×288 · 9:16</text>
+
+<!-- M5: 320×180 · 16:9 · right mid -->
+<rect x="594" y="195" width="366" height="207" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="777" y="299" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M5 · 366×207</text>
+
+<!-- WIDE: flexible, right lower -->
+<rect x="594" y="406" width="366" height="132" fill="#0c1310" stroke="#229966" stroke-width="1.5"/>
+<text x="777" y="469" font-family="monospace" font-size="11" fill="#44bb88" text-anchor="middle" dominant-baseline="middle">WIDE</text>
+
+<!-- M6: 480×270 · 16:9 · bottom full-width area -->
+<rect x="428" y="536" width="532" height="102" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="694" y="587" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M6 · широкий</text>
+
+<!-- M7: left bottom -->
+<rect x="40" y="642" width="384" height="48" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="232" y="666" font-family="monospace" font-size="9" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M7</text>
+
+<g font-family="monospace" font-size="9" fill="#444">
+  <rect x="40" y="706" width="9" height="9" fill="#d6ac48"/><text x="54" y="714">16:9</text>
+  <rect x="105" y="706" width="9" height="9" fill="#7777ee"/><text x="119" y="714">TEXT</text>
+  <rect x="175" y="706" width="9" height="9" fill="#cc9900"/><text x="189" y="714">AUTO 9:16</text>
+  <rect x="290" y="706" width="9" height="9" fill="#229966"/><text x="304" y="714">WIDE</text>
+</g>
+</svg>

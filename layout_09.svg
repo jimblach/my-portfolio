@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="730" viewBox="0 0 1000 730">
+<rect width="1000" height="730" fill="#0c0c0c"/>
+<text x="500" y="24" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">09 — МОНТАЖ · широкая полоса сверху, хаотичный ритм снизу</text>
+
+<!-- Top panoramic strip: M1 very wide -->
+<rect x="40" y="38" width="920" height="162" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="500" y="119" font-family="monospace" font-size="13" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M1 · 920×162 · панорама</text>
+
+<!-- Second zone: 3 cells, very different sizes and heights -->
+<!-- M2: 256×144 · starts at y=204 -->
+<rect x="40" y="204" width="256" height="144" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="168" y="276" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M2 · 256×144</text>
+
+<!-- AUTO: 9:16 · 162×288 · starts at y=220 -->
+<rect x="300" y="220" width="162" height="288" fill="#141000" stroke="#cc9900" stroke-width="1.5"/>
+<text x="381" y="356" font-family="monospace" font-size="11" fill="#ddbb44" text-anchor="middle" dominant-baseline="middle">AUTO</text>
+<text x="381" y="372" font-family="monospace" font-size="9" fill="#664" text-anchor="middle">162×288 · 9:16</text>
+
+<!-- M3: 384×216 · starts at y=200 (slightly higher) -->
+<rect x="466" y="200" width="384" height="216" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="658" y="308" font-family="monospace" font-size="12" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M3 · 384×216</text>
+
+<!-- WIDE: right side, fills gap -->
+<rect x="854" y="200" width="106" height="308" fill="#0c1310" stroke="#229966" stroke-width="1.5"/>
+<text x="907" y="352" font-family="monospace" font-size="10" fill="#44bb88" text-anchor="middle" dominant-baseline="middle">WIDE</text>
+
+<!-- TEXT: below M2, left side -->
+<rect x="40" y="352" width="256" height="160" fill="#0f0f22" stroke="#7777ee" stroke-width="1.5"/>
+<text x="168" y="424" font-family="monospace" font-size="11" fill="#aaaaff" text-anchor="middle" dominant-baseline="middle">TEXT · ≈30 слов</text>
+
+<!-- M4: 384×216 · center large, starts at y=420 -->
+<rect x="300" y="512" width="480" height="188" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="540" y="606" font-family="monospace" font-size="12" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M4 · 480×188</text>
+
+<!-- M5: below M3, right area, starts y=420 -->
+<rect x="466" y="420" width="384" height="88" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="658" y="464" font-family="monospace" font-size="10" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M5</text>
+
+<!-- M6: bottom-left small -->
+<rect x="40" y="516" width="256" height="144" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="168" y="588" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M6 · 256×144</text>
+
+<!-- M7: bottom-right -->
+<rect x="784" y="512" width="176" height="188" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="872" y="606" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M7</text>
+
+<g font-family="monospace" font-size="9" fill="#444">
+  <rect x="40" y="706" width="9" height="9" fill="#d6ac48"/><text x="54" y="714">16:9</text>
+  <rect x="105" y="706" width="9" height="9" fill="#7777ee"/><text x="119" y="714">TEXT</text>
+  <rect x="175" y="706" width="9" height="9" fill="#cc9900"/><text x="189" y="714">AUTO 9:16</text>
+  <rect x="290" y="706" width="9" height="9" fill="#229966"/><text x="304" y="714">WIDE</text>
+</g>
+</svg>

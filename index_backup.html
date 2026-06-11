@@ -1,0 +1,2569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gleb Paikachev</title>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0c0c0c;
+  --dark: #141414;
+  --gold: rgba(214,172,72,0.97);
+  --gold-dim: rgba(214,172,72,0.4);
+  --gold-faint: rgba(214,172,72,0.12);
+  --white: #f0ece2;
+  --grey: #888580;
+  --mid: #555250;
+  --bebas: 'Bebas Neue', sans-serif;
+  --spectral: 'Spectral', serif;
+  --mono: 'Space Mono', monospace;
+  --fraunces: 'Cormorant Garamond', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--spectral);
+  overflow-x: clip;
+  cursor: none;
+}
+
+/* CUSTOM CURSOR */
+.cursor {
+  position: fixed;
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  position: fixed;
+  width: 40px; height: 40px;
+  border: 1px solid var(--gold-dim);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.15s ease;
+}
+
+/* На тач-устройствах кастомный курсор не нужен — иначе точка зависает в углу */
+@media (hover: none), (pointer: coarse) {
+  .cursor, .cursor-ring { display: none !important; }
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.5rem 3rem;
+  mix-blend-mode: normal;
+}
+nav::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(12,12,12,0.95), transparent);
+  pointer-events: none;
+}
+.nav-id {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  position: relative;
+}
+.nav-links {
+  display: flex; gap: 2.5rem; list-style: none; position: relative;
+}
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--grey);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* HERO — SPLIT DIAGONAL */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-text {
+  padding: 12rem 4rem 6rem 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 2rem; height: 1px;
+  background: var(--gold);
+}
+
+.hero-name {
+  font-family: var(--bebas);
+  font-size: clamp(5rem, 10vw, 11rem);
+  line-height: 0.88;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  margin-bottom: 3rem;
+}
+
+.hero-name .gold { color: var(--gold); }
+
+.hero-statement {
+  font-family: var(--fraunces);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--grey);
+  line-height: 1.75;
+  max-width: 36ch;
+  margin-bottom: 3rem;
+}
+
+.hero-tags {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+}
+.tag {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid var(--mid);
+  color: var(--grey);
+  padding: 0.35rem 0.75rem;
+}
+
+/* HERO RIGHT — PHOTO COLLAGE */
+.hero-visual {
+  position: relative;
+  background: var(--dark);
+  overflow: hidden;
+}
+
+.hero-photo-main {
+  position: absolute; inset: 0;
+  background: #1a1a1a;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.photo-placeholder-hero {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, #111 0%, #1e1a14 50%, #111 100%);
+}
+
+/* diagonal cross-grid */
+.photo-placeholder-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(45deg, rgba(214,172,72,0.03) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(214,172,72,0.03) 25%, transparent 25%);
+  background-size: 60px 60px;
+}
+
+.hero-photo-label {
+  position: absolute;
+  bottom: 2rem; left: 2rem;
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+
+/* DIAGONAL DIVIDER */
+.diagonal {
+  position: absolute;
+  top: 0; left: -4rem; bottom: 0;
+  width: 8rem;
+  background: var(--black);
+  transform: skewX(-3deg);
+  z-index: 3;
+}
+
+/* MARQUEE */
+.marquee-bar {
+  background: var(--gold);
+  padding: 0.7rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-inner {
+  display: inline-flex;
+  animation: marquee 25s linear infinite;
+}
+.marquee-item {
+  font-family: var(--bebas);
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  color: var(--black);
+  padding: 0 2rem;
+}
+.marquee-sep { color: rgba(0,0,0,0.3); }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* === ABOUT === */
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 90vh;
+}
+
+.about-left {
+  padding: 7rem 5rem 7rem 6rem;
+  display: flex; flex-direction: column; justify-content: center;
+  border-right: 1px solid #222;
+}
+
+.section-num {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 3rem;
+}
+
+.about-title {
+  font-family: var(--bebas);
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  line-height: 0.9;
+  color: var(--white);
+  margin-bottom: 3rem;
+  letter-spacing: 0.02em;
+}
+.about-title em {
+  color: var(--gold);
+  font-style: normal;
+}
+
+.about-text p {
+  font-size: 1rem;
+  color: #998f80;
+  line-height: 1.85;
+  margin-bottom: 1.2rem;
+}
+.about-text p:first-child {
+  font-family: var(--fraunces);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--white);
+  line-height: 1.7;
+}
+
+.about-right {
+  background: var(--dark);
+  padding: 7rem 5rem;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+.fact-block {
+  padding: 1.8rem 0;
+  border-bottom: 1px solid #1e1e1e;
+}
+.fact-block:first-child { border-top: 1px solid #1e1e1e; }
+.fact-key {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+.fact-val {
+  font-family: var(--spectral);
+  font-size: 0.95rem;
+  color: #a09580;
+  line-height: 1.6;
+}
+.fact-val .fact-sub {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin: 0.8rem 0 0.15rem;
+}
+.fact-val .fact-sub:first-child { margin-top: 0; }
+
+/* === FEATURED WRAPPER === */
+.featured {
+  padding: 7rem 0 0;
+}
+
+.featured-header {
+  padding: 0 6rem 2rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-bottom: 1px solid #1e1e1e;
+  margin-bottom: 0;
+}
+
+.featured-title {
+  font-family: var(--bebas);
+  font-size: clamp(4rem, 8vw, 8rem);
+  line-height: 0.88;
+  letter-spacing: 0.02em;
+  color: var(--white);
+}
+
+.featured-title .outline {
+  -webkit-text-stroke: 1px var(--gold-dim);
+  color: transparent;
+}
+
+.featured-subtitle {
+  font-family: var(--fraunces);
+  font-style: italic;
+  color: var(--grey);
+  font-size: 0.95rem;
+  max-width: 28ch;
+  line-height: 1.7;
+  text-align: right;
+}
+
+/* subsection tabs */
+#tabs-sentinel {
+  scroll-margin-top: 3.75rem;
+}
+.featured-tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 6rem;
+  border-bottom: 1px solid #1e1e1e;
+  position: sticky;
+  top: 3.75rem;
+  background: var(--black);
+  z-index: 50;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.featured-tabs.tabs-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-0.4rem);
+}
+.featured-tabs.tabs-flow {
+  position: relative;
+  top: auto;
+}
+
+.featured-tab {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--grey);
+  padding: 1.2rem 2rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.2s, border-color 0.2s;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.featured-tab:hover { color: var(--white); }
+.featured-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* subsections */
+.featured-panel { display: none; }
+.featured-panel.active { display: block; }
+
+/* === PHOTOGRAPHY === */
+.photography { padding: 4rem 0 0; }
+
+.section-header {
+  padding: 0 6rem 5rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.section-heading {
+  font-family: var(--bebas);
+  font-size: clamp(3.5rem, 7vw, 7rem);
+  line-height: 0.88;
+  letter-spacing: 0.02em;
+}
+.section-heading .outline {
+  -webkit-text-stroke: 1px var(--gold-dim);
+  color: transparent;
+}
+
+.photo-carousel {
+  position: relative;
+}
+
+.photo-carousel-viewport {
+  overflow: visible;
+}
+
+.photo-grid-outer {
+  position: relative;
+  width: 100%;
+  /* Canvas: content x:60–1220 (1160px wide), y:90–843 (753px tall) from SVG option-7 */
+  /* Responsive: padding-top = 753/1160 = 64.91% of usable width */
+  padding: 0 6rem;
+}
+
+.photo-grid-inner {
+  position: relative;
+  width: 100%;
+  padding-top: 64.91%; /* 753/1160 */
+}
+
+.photo-cell {
+  position: absolute;
+  overflow: hidden;
+  background: #111;
+  cursor: none;
+}
+
+/* Positions from SVG option-7 (1280×760 viewBox, content x:60–1220, y:90–843)
+   Canvas: 1160px wide, 753px tall
+   left%  = (svgX − 60) / 1160 × 100
+   top%   = (svgY − 90) / 753 × 100
+   width% = svgW / 1160 × 100
+   height%= svgH / 753 × 100
+*/
+
+/* 001 — top-left large · svgX:60 Y:90 W:390 H:219 */
+.photo-cell:nth-child(1) {
+  left: 0%;
+  top: 0%;
+  width: 33.62%;
+  height: 29.08%;
+}
+/* VAUTO — narrow vertical spine · svgX:470 Y:118 W:118 H:157 */
+.photo-cell:nth-child(2) {
+  left: 35.34%;
+  top: 3.72%;
+  width: 10.17%;
+  height: 20.85%;
+}
+/* 002 — top center · svgX:610 Y:90 W:300 H:169 */
+.photo-cell:nth-child(3) {
+  left: 47.41%;
+  top: 0%;
+  width: 25.86%;
+  height: 22.44%;
+}
+/* 003 — top right · svgX:930 Y:90 W:290 H:163 */
+.photo-cell:nth-child(4) {
+  left: 75%;
+  top: 0%;
+  width: 25%;
+  height: 21.65%;
+}
+/* 004 — mid left · svgX:60 Y:331 W:330 H:186 */
+.photo-cell:nth-child(5) {
+  left: 0%;
+  top: 32.01%;
+  width: 28.45%;
+  height: 24.70%;
+}
+/* TEXT — mid center · svgX:410 Y:331 W:300 H:169 */
+.photo-cell:nth-child(6) {
+  left: 30.17%;
+  top: 32.01%;
+  width: 25.86%;
+  height: 22.44%;
+}
+/* 005 — large right · svgX:730 Y:286 W:490 H:276 */
+.photo-cell:nth-child(7) {
+  left: 57.76%;
+  top: 26.03%;
+  width: 42.24%;
+  height: 36.65%;
+}
+/* 006-wide — bottom left · svgX:60 Y:540 W:420 H:236 */
+.photo-cell:nth-child(8) {
+  left: 0%;
+  top: 59.76%;
+  width: 36.21%;
+  height: 31.34%;
+}
+/* HAUTO — horizontal auto · svgX:500 Y:586 W:240 H:135 */
+.photo-cell:nth-child(9) {
+  left: 37.93%;
+  top: 65.87%;
+  width: 20.69%;
+  height: 17.93%;
+}
+/* 007 — bottom right large · svgX:760 Y:584 W:460 H:259 */
+.photo-cell:nth-child(10) {
+  left: 60.34%;
+  top: 65.60%;
+  width: 39.66%;
+  height: 34.40%;
+}
+
+.photo-vertical-auto {
+  aspect-ratio: 3/4;
+}
+.photo-text-cell {
+  min-height: 0;
+  aspect-ratio: auto;
+}
+
+.photo-inner {
+  width: 100%; height: 100%;
+  min-height: 0;
+  background: linear-gradient(160deg, #161616, #1c1812);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.6rem;
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.7s cubic-bezier(0.2, 0, 0, 1);
+  position: absolute;
+  inset: 0;
+}
+
+.photo-cell:hover .photo-inner { transform: scale(1.04); }
+.photo-auto-cell:hover .photo-inner,
+.photo-text-cell:hover .photo-inner { transform: none; }
+
+.photo-cell > img,
+.photo-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.photo-cell > img {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.photo-cell > img.is-active,
+.photo-inner.is-active {
+  opacity: 1;
+}
+
+.photo-cell.has-media .photo-inner {
+  opacity: 0;
+}
+
+.photo-inner:has(img) .cam-icon,
+.photo-inner:has(img) .photo-num {
+  display: none;
+}
+
+.photo-cell > img.is-vertical,
+.photo-inner img.is-vertical {
+  object-fit: contain;
+}
+
+.photo-inner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    -55deg,
+    transparent,
+    transparent 20px,
+    rgba(214,172,72,0.018) 20px,
+    rgba(214,172,72,0.018) 21px
+  );
+}
+
+.photo-overlay {
+  position: absolute; inset: 0;
+  z-index: 3;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+}
+.photo-cell:hover .photo-overlay { opacity: 1; }
+
+/* На тач нет hover — показываем подписи фото постоянно */
+@media (hover: none), (pointer: coarse) {
+  .photo-overlay { opacity: 1; }
+}
+
+.photo-cell-nav {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  padding: 0.75rem;
+}
+
+.photo-auto-cell .photo-cell-nav,
+.photo-text-cell .photo-cell-nav {
+  display: none;
+}
+
+.vertical-photo-slide::after {
+  content: '';
+  width: min(58%, 8rem);
+  aspect-ratio: 3/4;
+  border: 1px solid rgba(214,172,72,0.2);
+  background: rgba(240,236,226,0.035);
+  position: relative;
+  z-index: 1;
+}
+
+.horizontal-photo-slide::after {
+  content: '';
+  width: min(72%, 18rem);
+  aspect-ratio: 16/9;
+  border: 1px solid rgba(214,172,72,0.2);
+  background: rgba(240,236,226,0.035);
+  position: relative;
+  z-index: 1;
+}
+
+.photo-text-cell { background: transparent; }
+
+.photo-text-content {
+  position: absolute;
+  inset: 0;
+  padding: clamp(0.8rem, 1.4vw, 1.35rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.8rem;
+  background: transparent;
+}
+
+.photo-text-kicker {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.photo-text-copy {
+  font-family: var(--fraunces);
+  font-style: italic;
+  font-size: clamp(0.86rem, 1.05vw, 1.08rem);
+  line-height: 1.55;
+  color: var(--white);
+  max-width: 34rem;
+}
+
+.photo-cell-btn {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgba(214,172,72,0.28);
+  background: rgba(12,12,12,0.62);
+  color: var(--gold);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  cursor: none;
+  pointer-events: auto;
+  opacity: 0.68;
+  transition: opacity 0.25s ease, border-color 0.25s ease;
+}
+
+.photo-cell:hover .photo-cell-btn,
+.photo-cell:focus-within .photo-cell-btn {
+  opacity: 1;
+}
+
+.photo-cell-btn:hover {
+  border-color: var(--gold);
+}
+
+.photo-overlay h3 {
+  font-family: var(--fraunces);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--white);
+  margin-bottom: 0.3rem;
+}
+.photo-overlay p {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+
+.photo-num {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  color: rgba(255,255,255,0.1);
+  letter-spacing: 0.1em;
+  position: relative; z-index: 1;
+}
+
+/* camera icon */
+.cam-icon {
+  position: relative; z-index: 1;
+  opacity: 0.08;
+  font-size: 2.5rem;
+  color: var(--white);
+}
+
+/* ============================================================
+   RESPONSIVE — tablet (≤1024px) and mobile (≤640px)
+   Desktop layout is untouched above this block.
+   ============================================================ */
+
+@media (max-width: 1024px) {
+
+  /* Nav */
+  nav { padding: 1.2rem 2rem; }
+  .nav-links { gap: 1.5rem; }
+
+  /* Hero */
+  .hero { grid-template-columns: 1fr !important; min-height: auto; }
+  .hero-text { padding: 9rem 2.5rem 4rem; }
+  .hero-visual { display: none !important; }
+
+  /* Marquee */
+  .marquee-bar { display: none; }
+
+  /* About */
+  .about { grid-template-columns: 1fr !important; min-height: auto; }
+  .about-left { padding: 5rem 2.5rem 3rem; border-right: none; border-bottom: 1px solid #1e1e1e; }
+  .about-right { padding: 3rem 2.5rem 5rem; }
+
+  /* Featured header */
+  .featured-header { padding: 0 2.5rem 2rem; flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  .featured-subtitle { text-align: left; max-width: 100%; }
+  .featured-tabs { padding: 0 2.5rem; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* Photo grid — switch absolute to flow grid */
+  .photo-grid-outer { padding: 0; }
+  .photo-grid-inner {
+    position: relative !important;
+    padding-top: 0 !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 3px !important;
+  }
+  .photo-cell {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    width: auto !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9 !important;
+  }
+  .photo-cell.photo-text-cell { display: none !important; }
+  .photo-cell.photo-auto-cell { aspect-ratio: 4 / 3 !important; }
+
+  /* Section header */
+  .section-header { padding: 0 2.5rem 3rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
+
+  /* Artivism — collapse to single column */
+  .artivism {
+    display: block !important;
+    padding: 5rem 2.5rem;
+  }
+  .artivism-sticky {
+    position: static !important;
+    margin-bottom: 3rem;
+  }
+  .artivism-num-big { display: none !important; }
+  .artivism-title { font-size: clamp(2.5rem, 6vw, 4rem); }
+  .artivism-list { border-top: none; }
+
+  /* Experience */
+  .experience { padding: 5rem 2.5rem; }
+  .featured-results { padding-right: 0; margin-bottom: 2.5rem; }
+
+  /* Skills — single column */
+  .skills {
+    display: block !important;
+    padding: 5rem 2.5rem;
+  }
+  .skills::before { display: none; }
+  .skill-col {
+    border: none !important;
+    border-top: 1px solid #1c1c1c !important;
+    margin: 0 !important;
+    padding: 2.5rem 0 !important;
+  }
+
+  /* Contact */
+  .contact { padding: 6rem 2.5rem; }
+  .contact-inner { flex-direction: column !important; align-items: flex-start; gap: 3rem; }
+  .contact-title { font-size: clamp(3.5rem, 10vw, 7rem); }
+
+  /* Footer */
+  footer { padding: 2rem 2.5rem; flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+}
+
+@media (max-width: 640px) {
+
+  /* Nav */
+  .nav-links { display: none; }
+  nav { padding: 1rem 1.5rem; }
+
+  /* Hero */
+  .hero-text { padding: 7rem 1.5rem 3.5rem; }
+  .hero-name { font-size: clamp(3.5rem, 18vw, 6rem); }
+  .hero-statement { font-size: 1rem; }
+
+  /* About */
+  .about-left { padding: 4rem 1.5rem 2.5rem; }
+  .about-right { padding: 2.5rem 1.5rem 4rem; }
+  .about-title { font-size: clamp(2.5rem, 12vw, 4rem); }
+
+  /* Featured */
+  .featured-header { padding: 0 1.5rem 1.5rem; }
+  .featured-title { font-size: clamp(3rem, 16vw, 5rem); }
+  .featured-tabs { padding: 0 1.5rem; }
+  .featured-tab { padding: 1rem 1rem; white-space: nowrap; font-size: 0.55rem; }
+
+  /* Photo grid — 1 column */
+  .photo-grid-inner { grid-template-columns: 1fr !important; }
+  .photo-cell { aspect-ratio: 16 / 9 !important; }
+
+  /* Section heading + header */
+  .section-heading { font-size: clamp(2.5rem, 14vw, 5rem); }
+  .section-header { padding: 0 1.5rem 2.5rem; }
+
+  /* Artivism */
+  .artivism { padding: 4rem 1.5rem; }
+  .art-item {
+    grid-template-columns: 2rem 1fr !important;
+    gap: 1rem;
+    padding: 2rem 0;
+  }
+  .art-item:hover { margin: 0 !important; padding: 2rem 0 !important; }
+  .art-item h3 { font-size: 1.15rem; }
+  .art-img-thumb { height: 90px; }
+
+  /* Experience timeline mobile */
+  .experience { padding: 3rem 0 3rem 1.5rem; }
+  .featured-results { padding-right: 1.5rem; margin-bottom: 2rem; }
+  .exp-card-role { font-size: 0.85rem; }
+  .exp-card-org { font-size: 0.5rem; }
+  .exp-timeline-wrap::-webkit-scrollbar { display: none; }
+  .exp-timeline-wrap { scrollbar-width: none; -ms-overflow-style: none; }
+
+  /* Skills */
+  .skills { padding: 4rem 1.5rem; }
+  .skill-col { padding: 2rem 0 !important; }
+
+  /* Contact */
+  .contact { padding: 5rem 1.5rem; }
+  .contact-title { font-size: clamp(3rem, 16vw, 6rem); }
+  .contact-links { gap: 1.2rem; }
+
+  /* Footer */
+  footer { padding: 1.5rem; }
+}
+
+
+/* === ARTIVISM === */
+.artivism {
+  padding: 10rem 6rem;
+  display: grid;
+  grid-template-columns: 40% 1fr;
+  gap: 8rem;
+  align-items: start;
+}
+
+.artivism-sticky {
+  position: sticky; top: 8rem;
+}
+
+.artivism-num-big {
+  font-family: var(--bebas);
+  font-size: 20rem;
+  line-height: 0.8;
+  color: var(--gold-faint);
+  letter-spacing: -0.02em;
+  margin-bottom: -4rem;
+  display: block;
+}
+
+.artivism-title {
+  font-family: var(--bebas);
+  font-size: clamp(3rem, 5vw, 5rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  margin-bottom: 2rem;
+}
+
+.artivism-desc {
+  font-family: var(--fraunces);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--grey);
+  line-height: 1.8;
+  max-width: 32ch;
+}
+
+.artivism-list { border-top: 1px solid #222; }
+
+.art-item {
+  padding: 3rem 0;
+  border-bottom: 1px solid #181818;
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 2rem;
+  transition: background 0.3s;
+}
+.art-item:hover { background: rgba(214,172,72,0.03); margin: 0 -1.5rem; padding: 3rem 1.5rem; }
+
+.art-n {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--gold);
+  padding-top: 0.5rem;
+  letter-spacing: 0.1em;
+}
+
+.art-item-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 1.2rem;
+}
+
+/* Images added via JS/code — use any of these patterns:
+   1. Single image:   img.className = 'art-img-thumb'
+   2. Wide image:     img.className = 'art-img-thumb art-img-wide'
+   3. Portrait image: img.className = 'art-img-thumb art-img-portrait'
+*/
+.art-img-thumb {
+  height: 120px;
+  width: auto;
+  max-width: 240px;
+  object-fit: cover;
+  border: 1px solid #222;
+  cursor: zoom-in;
+  transition: border-color 0.25s, opacity 0.25s;
+  display: block;
+}
+.art-img-thumb:hover { border-color: var(--gold-dim); opacity: 0.85; }
+.art-img-thumb.art-img-wide { width: 100%; max-width: 100%; height: 200px; }
+.art-img-thumb.art-img-portrait { height: 180px; width: auto; }
+
+.art-img-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.93);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.art-img-lightbox.open { opacity: 1; pointer-events: all; }
+.art-img-lightbox img { max-width: 90vw; max-height: 88vh; object-fit: contain; }
+.art-img-lightbox-caption {
+  position: absolute;
+  bottom: 2rem;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+}
+
+
+
+.art-item h3 {
+  font-family: var(--fraunces);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.6rem;
+  line-height: 1.2;
+}
+
+.art-item p {
+  font-size: 0.9rem;
+  color: #887e70;
+  line-height: 1.75;
+  margin-bottom: 0.6rem;
+}
+
+.art-collab {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+
+/* === EXPERIENCE / TIMELINE === */
+.experience {
+  background: var(--dark);
+  padding: 8rem 0 8rem 6rem;
+  overflow: hidden;
+}
+
+/* === FEATURED RESULTS — компактная подпись к таймлайну === */
+.featured-results {
+  padding-right: 6rem;
+  margin-bottom: 3rem;
+}
+.results-label {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 1.4rem;
+}
+.results-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem 2.6rem;
+}
+.result-cell {
+  padding: 0;
+}
+.result-num {
+  font-family: var(--bebas);
+  font-size: 1.7rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--gold);
+}
+.result-num.pending { color: var(--gold-dim); }
+.result-label {
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey);
+  line-height: 1.4;
+  margin-top: 0.45rem;
+}
+
+.exp-timeline-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 2rem;
+  cursor: grab;
+}
+.exp-timeline-wrap:active { cursor: grabbing; }
+.exp-timeline-wrap::-webkit-scrollbar {
+  height: 2px;
+}
+.exp-timeline-wrap::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+.exp-timeline-wrap::-webkit-scrollbar-thumb {
+  background: var(--gold-dim);
+}
+.exp-timeline-wrap {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(214,172,72,0.4) #1a1a1a;
+}
+
+.exp-timeline-inner {
+  min-width: 1200px;
+  position: relative;
+  margin: 0 4rem 0 1rem;
+}
+
+.exp-axis {
+  position: relative;
+  height: 1px;
+  background: #2a2a2a;
+  margin: 285px 0 240px;
+}
+
+.exp-axis-dot-now {
+  position: absolute;
+  right: -5px; top: -10.5px;
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.exp-years {
+  position: absolute;
+  left: 0; right: 0;
+  top: 8px;
+  height: 0;
+}
+.exp-year {
+  position: absolute;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #333;
+  letter-spacing: 0.05em;
+}
+
+/* Cards */
+.exp-card {
+  position: absolute;
+  background: #1a1a1a;
+  border: 1px solid #262626;
+  padding: 10px 13px;
+  box-sizing: border-box;
+  transition: border-color 0.25s, background 0.25s;
+  cursor: default;
+}
+.exp-card:hover { border-color: var(--gold-dim); background: #1e1c18; }
+.exp-card.gold { border-left: 2px solid var(--gold); }
+.exp-card.gold:hover { border-color: var(--gold); }
+
+.exp-card-org {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.exp-card-role {
+  font-family: var(--bebas);
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 3px;
+}
+.exp-card-dates {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  color: #555;
+  letter-spacing: 0.08em;
+}
+
+/* Stems */
+.exp-stem {
+  position: absolute;
+  width: 1px;
+  background: #2a2a2a;
+}
+.exp-stem.gold { background: var(--gold-dim); }
+
+.exp-dot {
+  position: absolute;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #2a2a2a;
+}
+.exp-dot.gold { background: var(--gold); }
+
+/* Tooltip */
+.exp-tooltip {
+  position: fixed;
+  z-index: 999;
+  background: #111;
+  border: 1px solid #333;
+  padding: 12px 16px;
+  max-width: 280px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  font-family: var(--spectral);
+}
+.exp-tooltip.visible { opacity: 1; }
+.exp-tooltip-role {
+  font-family: var(--bebas);
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+.exp-tooltip-org {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 8px;
+}
+.exp-tooltip-desc {
+  font-size: 0.85rem;
+  color: #888;
+  line-height: 1.7;
+}
+.exp-tooltip-dates {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  color: #444;
+  margin-top: 8px;
+  letter-spacing: 0.08em;
+}
+
+/* === SKILLS === */
+.skills {
+  padding: 8rem 6rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  position: relative;
+}
+.skills::before {
+  content: 'SKILLS';
+  position: absolute;
+  font-family: var(--bebas);
+  font-size: 18vw;
+  color: rgba(255,255,255,0.015);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.skill-col {
+  padding: 3rem;
+  border: 1px solid #1c1c1c;
+  margin: -1px 0 0 -1px;
+}
+
+.skill-col h4 {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--gold-faint);
+}
+
+.skill-col ul { list-style: none; }
+.skill-col li {
+  font-family: var(--spectral);
+  font-size: 0.9rem;
+  color: #807060;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #161616;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.skill-col li::before {
+  content: '';
+  width: 4px; height: 4px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+/* === CONTACT === */
+.contact {
+  background: var(--gold);
+  padding: 10rem 6rem;
+  position: relative;
+  overflow: hidden;
+}
+.contact::before {
+  content: 'CONTACT';
+  position: absolute;
+  font-family: var(--bebas);
+  font-size: 25vw;
+  color: rgba(0,0,0,0.06);
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: -0.02em;
+}
+
+.contact-inner {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.contact-title {
+  font-family: var(--bebas);
+  font-size: clamp(4rem, 9vw, 10rem);
+  line-height: 0.85;
+  letter-spacing: 0.02em;
+  color: var(--black);
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.contact-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  text-decoration: none;
+}
+.contact-link span:first-child {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.45);
+}
+.contact-link span:last-child {
+  font-family: var(--fraunces);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--black);
+  transition: opacity 0.2s;
+}
+.contact-link:hover span:last-child { opacity: 0.6; }
+
+.contact-sub {
+  font-family: var(--fraunces);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: rgba(0,0,0,0.6);
+  max-width: 34ch;
+  line-height: 1.6;
+  margin-top: 2rem;
+}
+
+/* FOOTER */
+footer {
+  background: #0a0a0a;
+  padding: 2rem 6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #1a1a1a;
+}
+footer span {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #333;
+}
+
+/* SCROLL REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <span class="nav-id">Gleb Paikachev</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#featured">Work</a></li>
+    <li><a href="#experience">CV</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Organizer · Program Manager · Documentary Photographer</p>
+    <h1 class="hero-name">
+      GLEB<br><span class="gold">PAI</span>KA<br>CHEV
+    </h1>
+    <p class="hero-statement">I build the campaigns, programs, and organizing infrastructure that turn human rights goals into action — across 15+ years in civil society.</p>
+    <div class="hero-tags">
+      <span class="tag">Documentary</span>
+      <span class="tag">Human Rights</span>
+      <span class="tag">Campaigns</span>
+      <span class="tag">Grassroots</span>
+      <span class="tag">15+ Years</span>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-photo-main">
+      <div class="photo-placeholder-hero">
+        <span class="cam-icon">⬡</span>
+        <span style="font-family: var(--mono); font-size:0.55rem; letter-spacing:0.15em; color:rgba(214,172,72,0.15); text-transform:uppercase; position:relative; z-index:1;">Your portrait here</span>
+      </div>
+    </div>
+    <div class="diagonal"></div>
+    <div class="hero-photo-label">Field work / Portrait</div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-inner">
+    <span class="marquee-item">Program Management</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">Campaign Coordination</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">Documentary Photography</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">Human Rights Advocacy</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">Event Production</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">Grassroots Organizing</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">Harm Reduction</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">International Programs</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">Environmental Action</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">Program Management</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">Campaign Coordination</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">Documentary Photography</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">Human Rights Advocacy</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">Event Production</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">Grassroots Organizing</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">Harm Reduction</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">International Programs</span><span class="marquee-sep"> · </span>
+    <span class="marquee-item">Environmental Action</span><span class="marquee-sep"> · </span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-left">
+    <p class="section-num">01 — About</p>
+    <h2 class="about-title">ORGANIZE.<br><em>CREATE.</em><br>ENGAGE.</h2>
+    <div class="about-text">
+      <p>My work is rooted in activism — in building the campaigns, programs, and communities that make change possible. Media and visual storytelling are part of how I do that: the way you turn a cause into something people actually pay attention to.</p>
+      <p>Over 15+ years in civil society I've coordinated international programs, run grassroots campaigns, and managed events and partnerships across human rights, harm reduction, environmental justice, and anti-militarism — from election monitoring in remote regions to legal-aid infrastructure during police raids.<!-- TODO: добавить 1–2 метрики от Глеба --></p>
+      <p>My visual work has run in Novaya Gazeta, The Guardian, 7×7, Les.Media, and Amnesty International — proof I can create media that clears a top editorial bar and pulls an audience in.</p>
+    </div>
+  </div>
+  <div class="about-right">
+    <div class="fact-block">
+      <div class="fact-key">Based</div>
+      <div class="fact-val">Tbilisi, Georgia</div>
+    </div>
+    <div class="fact-block">
+      <div class="fact-key">Focus</div>
+      <div class="fact-val">Campaigns, programs &amp; visual media</div>
+    </div>
+    <div class="fact-block">
+      <div class="fact-key">Published in</div>
+      <div class="fact-val">Novaya Gazeta · The Guardian · 7×7 · Les.Media · Amnesty International</div>
+    </div>
+    <div class="fact-block">
+      <div class="fact-key">Civil society</div>
+      <div class="fact-val">15+ years — human rights, harm reduction, environmental justice, anti-militarism</div>
+    </div>
+    <div class="fact-block">
+      <div class="fact-key">Open to</div>
+      <div class="fact-val">
+        <span class="fact-sub">Roles</span>program &amp; project management · campaign coordination · event management · communications &amp; media
+        <span class="fact-sub">Engagement</span>full-time, part-time, consulting, or freelance
+        <span class="fact-sub">Location</span>remote from Tbilisi · open to relocation
+      </div>
+    </div>
+    <div class="fact-block">
+      <div class="fact-key">Languages</div>
+      <div class="fact-val">Russian (native) · English (advanced)</div>
+    </div>
+    <div class="fact-block">
+      <div class="fact-key">Contact</div>
+      <div class="fact-val">jimblach@gmail.com</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section class="featured" id="featured">
+
+  <div class="featured-header">
+    <div>
+      <p class="section-num">02 — Featured Work</p>
+      <h2 class="featured-title">FEA<span class="outline">TURED</span><br>WORK</h2>
+    </div>
+    <p class="featured-subtitle">Photography, creative work, research, and public practice.</p>
+  </div>
+
+  <div id="tabs-sentinel"></div>
+  <div class="featured-tabs tabs-flow">
+    <button class="featured-tab active" data-tab="photography">Photography</button>
+    <button class="featured-tab" data-tab="artivism">Creative Work</button>
+    <button class="featured-tab" data-tab="analytics">Analytics &amp; Publications</button>
+    <button class="featured-tab" data-tab="events">Events &amp; Campaigns</button>
+  </div>
+
+  <!-- PANEL: PHOTOGRAPHY -->
+  <div class="featured-panel active" id="panel-photography">
+    <section class="photography" id="photography">
+      <div class="photo-carousel" data-photo-carousel>
+    <div class="photo-carousel-viewport" data-photo-carousel-viewport>
+      <div class="photo-grid-outer"><div class="photo-grid-inner">
+
+    <!-- 001 — top-left large  Look in Eye-->
+    <div class="photo-cell" data-project-description="Photographs from Look in Eye — children who fled the war, and a childhood lived between borders. (Amnesty International)">
+      <img src="images/Look%20in%20Eye/005.jpg" alt="">
+      <img src="images/Look%20in%20Eye/024.jpg" alt="">
+      <img src="images/Look%20in%20Eye/047.jpg" alt="">
+      <img src="images/Look%20in%20Eye/049.jpg" alt="">
+      <img src="images/Look%20in%20Eye/057.jpg" alt="">
+      <img src="images/Look%20in%20Eye/074.jpg" alt="">
+      <img src="images/Look%20in%20Eye/090.jpg" alt="">
+      <img src="images/Look%20in%20Eye/102.jpg" alt="">
+      <img src="images/Look%20in%20Eye/105.jpg" alt="">
+      <img src="images/Look%20in%20Eye/106.jpg" alt="">
+      <img src="images/Look%20in%20Eye/110.jpg" alt="">
+      <img src="images/Look%20in%20Eye/117.jpg" alt="">
+      <img src="images/Look%20in%20Eye/121.jpg" alt="">
+      <img src="images/Look%20in%20Eye/149.jpg" alt="">
+      <img src="images/Look%20in%20Eye/152.jpg" alt="">
+      <img src="images/Look%20in%20Eye/158.jpg" alt="">  
+      <div class="photo-inner">
+        <span class="cam-icon">⬡</span>
+        <span class="photo-num">001</span>
+      </div>
+      <div class="photo-overlay">
+        <h3>Look in Eye</h3>
+        <p>Amnesty International · Novaya Gazeta</p>
+      </div>
+    </div>
+
+    <!-- VAUTO — narrow vertical auto carousel -->
+    <div class="photo-cell photo-auto-cell photo-vertical-auto" data-auto-carousel>
+      <div class="photo-inner vertical-photo-slide">
+        <span class="cam-icon">⬡</span>
+        <span class="photo-num">V01</span>
+      </div>
+      <div class="photo-inner vertical-photo-slide" style="background: linear-gradient(30deg, #181414, #0e0e0e);">
+        <span class="cam-icon">⬡</span>
+        <span class="photo-num">V02</span>
+      </div>
+      <div class="photo-inner vertical-photo-slide" style="background: linear-gradient(200deg, #141818, #0e0e0e);">
+        <span class="cam-icon">⬡</span>
+        <span class="photo-num">V03</span>
+      </div>
+      <img src="images/Other_V/007.jpg" alt="">
+      <img src="images/Other_V/029.jpg" alt="">
+      <img src="images/Other_V/030.jpg" alt="">
+      <img src="images/Other_V/076.jpg" alt="">
+      <img src="images/Other_V/078.jpg" alt="">
+      <img src="images/Other_V/087.jpg" alt="">
+      <img src="images/Other_V/097.jpg" alt="">
+      <img src="images/Other_V/111.jpg" alt="">
+      <img src="images/Other_V/124.jpg" alt="">
+      <img src="images/Other_V/127.jpg" alt="">
+      <img src="images/Other_V/142.jpg" alt="">
+      <img src="images/Other_V/154.jpg" alt="">
+    </div>
+
+    <!-- 002 — top center -->
+    <div class="photo-cell" data-project-description="Evgeny, an artist made on the city's margins — informal culture, street practice, and a self built in public view.">
+      <div class="photo-inner" style="background: linear-gradient(160deg, #1a1510, #0e0e0e);">
+        <span class="cam-icon">⬡</span>
+        <span class="photo-num">002</span>
+      </div>
+      <div class="photo-overlay">
+        <h3>Hood Artist</h3>
+        <p>Social media</p>
+      </div>
+      <img src="images/Hood%20Artists/009.jpg" alt="">
+      <img src="images/Hood%20Artists/020.jpg" alt="">
+      <img src="images/Hood%20Artists/037.jpg" alt="">
+      <img src="images/Hood%20Artists/046.jpg" alt="">
+      <img src="images/Hood%20Artists/060.jpg" alt="">
+      <img src="images/Hood%20Artists/069.jpg" alt="">
+      <img src="images/Hood%20Artists/113.jpg" alt="">
+      <img src="images/Hood%20Artists/133.jpg" alt="">
+    </div>
+
+    <!-- 003 — top right Arctic Sunrise-->
+    <div class="photo-cell" data-project-description="The Greenpeace ship Arctic Sunrise leaving Murmansk after its release from FSB custody — the closing image of the Arctic 30 standoff.">
+      <div class="photo-inner" style="background: linear-gradient(200deg, #141818, #0e0e0e);">
+        <span class="cam-icon">⬡</span>
+        <span class="photo-num">003</span>
+      </div>
+      <div class="photo-overlay">
+        <h3>Depart of Arctic Sunrise</h3>
+        <p>Greenpeace · Various outlets</p>
+      </div>
+      <img src="images/Arctic%20Sunrise/031.jpg" alt="">
+      <img src="images/Arctic%20Sunrise/044.jpg" alt="">
+    </div>
+
+    <!-- 004 — mid left Blagovo -->
+    <div class="photo-cell" data-project-description="Anatoly Blagovo and the museum of political-repression history he built inside a private school — keeping a record the state would rather erase.">
+      <div class="photo-inner" style="background: linear-gradient(30deg, #181414, #0e0e0e);">
+        <span class="cam-icon">⬡</span>
+        <span class="photo-num">004</span>
+      </div>
+      <div class="photo-overlay">
+        <h3>Anatoly Blagovo</h3>
+        <p>Novaya Gazeta · Memorial</p>
+      </div>
+      <img src="images/Blagovo/006.jpg" alt="">
+      <img src="images/Blagovo/064.jpg" alt="">
+      <img src="images/Blagovo/118.jpg" alt="">
+      <img src="images/Blagovo/150.jpg" alt="">
+      <img src="images/Blagovo/151.jpg" alt="">
+      <img src="images/Blagovo/161.jpg" alt="">
+    </div>
+
+    <!-- TEXT — mid center -->
+    <div class="photo-cell photo-text-cell" data-project-text>
+      <div class="photo-text-content">
+        <span class="photo-text-kicker"></span>
+        <p class="photo-text-copy"></p>
+      </div>
+    </div>
+
+    <!-- 005 — large right block spanning rows 2–3 Rural Elections -->
+    <div class="photo-cell" data-project-description="An election day in rural Russia — observers, quiet pressure, and the small defiances that never reach the national news.">
+      <div class="photo-inner" style="background: linear-gradient(100deg, #131a1a, #0e0e0e);">
+        <span class="cam-icon">⬡</span>
+        <span class="photo-num">005</span>
+      </div>
+      <div class="photo-overlay">
+        <h3>Rural Elections</h3>
+        <p>Voronezh Oblast · Golos Association</p>
+      </div>
+      <img src="images/Elections/003.jpg" alt="">
+      <img src="images/Elections/010.jpg" alt="">
+      <img src="images/Elections/013.jpg" alt="">
+      <img src="images/Elections/019.jpg" alt="">
+      <img src="images/Elections/033.jpg" alt="">
+      <img src="images/Elections/034.jpg" alt="">
+      <img src="images/Elections/056.jpg" alt="">
+      <img src="images/Elections/059.jpg" alt="">
+      <img src="images/Elections/061.jpg" alt="">
+      <img src="images/Elections/063.jpg" alt="">
+      <img src="images/Elections/066.jpg" alt="">
+      <img src="images/Elections/068.jpg" alt="">
+      <img src="images/Elections/075.jpg" alt="">
+      <img src="images/Elections/080.jpg" alt="">
+      <img src="images/Elections/082.jpg" alt="">
+      <img src="images/Elections/084.jpg" alt="">
+      <img src="images/Elections/088.jpg" alt="">
+      <img src="images/Elections/093.jpg" alt="">
+      <img src="images/Elections/099.jpg" alt="">
+      <img src="images/Elections/100.jpg" alt="">
+      <img src="images/Elections/107.jpg" alt="">
+      <img src="images/Elections/114.jpg" alt="">
+      <img src="images/Elections/119.jpg" alt="">
+      <img src="images/Elections/130.jpg" alt="">
+      <img src="images/Elections/138.jpg" alt="">
+    </div>
+
+    <!-- 006-wide — bottom left wide  Oil spills-->
+    <div class="photo-cell" data-project-description="Oil spills bleeding across the Komi tundra — poisoned rivers, an industry that won't speak, and the people left living in it.">
+      <div class="photo-inner" style="background: linear-gradient(120deg, #151515, #1a1410);">
+        <span class="cam-icon">⬡</span>
+        <span class="photo-num">006</span>
+      </div>
+      <div class="photo-overlay">
+        <h3>Oil Spills in Komi</h3>
+        <p>7×7 · The Guardian · Social media</p>
+      </div>
+      <img src="images/Oil%20Spills/001.jpg" alt="">
+      <img src="images/Oil%20Spills/004.jpg" alt="">
+      <img src="images/Oil%20Spills/011.jpg" alt="">
+      <img src="images/Oil%20Spills/026.jpg" alt="">
+      <img src="images/Oil%20Spills/035.jpg" alt="">
+      <img src="images/Oil%20Spills/036.jpg" alt="">
+      <img src="images/Oil%20Spills/048.jpg" alt="">
+      <img src="images/Oil%20Spills/092.jpg" alt="">
+      <img src="images/Oil%20Spills/095.jpg" alt="">
+      <img src="images/Oil%20Spills/101.jpg" alt="">
+      <img src="images/Oil%20Spills/123.jpg" alt="">
+      <img src="images/Oil%20Spills/148.jpg" alt="">
+      <img src="images/Oil%20Spills/153.jpg" alt="">
+    </div>
+
+    <!-- HAUTO — horizontal auto carousel -->
+    <div class="photo-cell photo-auto-cell" data-auto-carousel data-project-description="Solidarity in motion — campaigns, demonstrations, and community organizing across Russia.">
+      <div class="photo-inner">
+        <span class="cam-icon">⬡</span>
+        <span class="photo-num">H01</span>
+      </div>
+      <div class="photo-inner" style="background: linear-gradient(220deg, #181414, #101010);">
+        <span class="cam-icon">⬡</span>
+        <span class="photo-num">H02</span>
+      </div>
+      <div class="photo-inner" style="background: linear-gradient(40deg, #141818, #0e0e0e);">
+        <span class="cam-icon">⬡</span>
+        <span class="photo-num">H03</span>
+      </div>
+      <div class="photo-overlay">
+        <h3>Public Actions</h3>
+        <p>Various · NGOs & independent media</p>
+      </div>
+      <img src="images/Other_H/002.jpg" alt="">
+      <img src="images/Other_H/008.jpg" alt="">
+      <img src="images/Other_H/012.jpg" alt="">
+      <img src="images/Other_H/015.jpg" alt="">
+      <img src="images/Other_H/016.jpg" alt="">
+      <img src="images/Other_H/017.jpg" alt="">
+      <img src="images/Other_H/018.jpg" alt="">
+      <img src="images/Other_H/023.jpg" alt="">
+      <img src="images/Other_H/025.jpg" alt="">
+      <img src="images/Other_H/027.jpg" alt="">
+      <img src="images/Other_H/028.jpg" alt="">
+      <img src="images/Other_H/032.jpg" alt="">
+      <img src="images/Other_H/038.jpg" alt="">
+      <img src="images/Other_H/039.jpg" alt="">
+      <img src="images/Other_H/040.jpg" alt="">
+      <img src="images/Other_H/041.jpg" alt="">
+      <img src="images/Other_H/042.jpg" alt="">
+      <img src="images/Other_H/051.jpg" alt="">
+      <img src="images/Other_H/052.jpg" alt="">
+      <img src="images/Other_H/055.jpg" alt="">
+      <img src="images/Other_H/062.jpg" alt="">
+      <img src="images/Other_H/065.jpg" alt="">
+      <img src="images/Other_H/067.jpg" alt="">
+      <img src="images/Other_H/072.jpg" alt="">
+      <img src="images/Other_H/077.jpg" alt="">
+      <img src="images/Other_H/081.jpg" alt="">
+      <img src="images/Other_H/083.jpg" alt="">
+      <img src="images/Other_H/086.jpg" alt="">
+      <img src="images/Other_H/089.jpg" alt="">
+      <img src="images/Other_H/091.jpg" alt="">
+      <img src="images/Other_H/096.jpg" alt="">
+      <img src="images/Other_H/098.jpg" alt="">
+      <img src="images/Other_H/103.jpg" alt="">
+      <img src="images/Other_H/104.jpg" alt="">
+      <img src="images/Other_H/108.jpg" alt="">
+      <img src="images/Other_H/109.jpg" alt="">
+      <img src="images/Other_H/112.jpg" alt="">
+      <img src="images/Other_H/120.jpg" alt="">
+      <img src="images/Other_H/129.jpg" alt="">
+      <img src="images/Other_H/134.jpg" alt="">
+      <img src="images/Other_H/136.jpg" alt="">
+      <img src="images/Other_H/137.jpg" alt="">
+      <img src="images/Other_H/139.jpg" alt="">
+      <img src="images/Other_H/141.jpg" alt="">
+      <img src="images/Other_H/144.jpg" alt="">
+      <img src="images/Other_H/147.jpg" alt="">
+      <img src="images/Other_H/155.jpg" alt="">
+      <img src="images/Other_H/156.jpg" alt="">
+      <img src="images/Other_H/160.jpg" alt="">
+    </div>
+
+    <!-- 007 — bottom right large Perspektivy -->
+    <div class="photo-cell" data-project-description="A photoreportage for Les.Media inside Perspektivy — disability, daily care, and the unglamorous work of insisting people aren't forgotten.">
+      <div class="photo-inner" style="background: linear-gradient(30deg, #181414, #0e0e0e);">
+        <span class="cam-icon">⬡</span>
+        <span class="photo-num">004</span>
+      </div>
+      <div class="photo-overlay">
+        <h3>Perspektivy </h3>
+        <p>Les.Media</p>
+      </div>
+      <img src="images/Perspectivy/014.jpg" alt="">
+      <img src="images/Perspectivy/045.jpg" alt="">
+      <img src="images/Perspectivy/070.jpg" alt="">
+      <img src="images/Perspectivy/073.jpg" alt="">
+      <img src="images/Perspectivy/116.jpg" alt="">
+      <img src="images/Perspectivy/146.jpg" alt="">
+    </div>
+
+      </div></div>
+    </div>
+  </div>
+    </section>
+  </div>
+
+  <!-- PANEL: ARTIVISM -->
+  <div class="featured-panel" id="panel-artivism">
+    <section class="artivism" id="artivism">
+      <div class="artivism-sticky">
+        <span class="artivism-num-big">02</span>
+        <h2 class="artivism-title">CREATIVE<br>WORK</h2>
+        <p class="artivism-desc">Art and activism are not separate traditions in my work. They are the same gesture — the act of making something that refuses to look away.</p>
+      </div>
+
+      <div class="artivism-list">
+
+        <div class="art-item reveal">
+          <span class="art-n">01</span>
+          <div class="art-item-body" data-project-id="kanonerskiy-walk">
+            <h3>Kanonerskiy Walk</h3>
+            <p>A soundscape I recorded for an online audio tour of Kanonersky Island and its residents facing relocation.</p>
+            <p class="art-collab">Trava Collective</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">02</span>
+          <div class="art-item-body" data-project-id="chernobyl-prayer">
+            <h3>Chernobyl Prayer</h3>
+            <p>Created the visual accompaniment for "Chernobyl Prayer," a theatrical elegy for a generation's shared grief — and brought it to Voronezh.</p>
+            <p class="art-collab">Trava Collective</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">03</span>
+          <div class="art-item-body" data-project-id="hundred-year-man">
+            <h3>100 Year Man</h3>
+            <p>A designed walking experience through Russia's human-rights history, with St Petersburg as the stage — women's rights, repression, resistance, built to be felt, not recited.</p>
+            <p class="art-collab">Trava Collective × Amnesty International</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">04</span>
+          <div class="art-item-body" data-project-id="look-in-eye">
+            <h3>Look in Eye</h3>
+            <p>A multimedia project on children who fled the war — I co-shaped its concept and structure and made the photography. Built with Amnesty International, to make a childhood lived between borders impossible to look away from.</p>
+            <p class="art-collab">Amnesty International</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- PANEL: ANALYTICS & PUBLICATIONS -->
+  <div class="featured-panel" id="panel-analytics">
+    <section class="artivism" id="analytics">
+      <div class="artivism-sticky">
+        <span class="artivism-num-big">03</span>
+        <h2 class="artivism-title">ANALYTICS<br>&amp;<br>PUBLICATIONS</h2>
+        <p class="artivism-desc">Research, reports, and written work at the intersection of civil society, human rights, and political change.</p>
+      </div>
+
+      <div class="artivism-list">
+
+        <div class="art-item reveal">
+          <span class="art-n">01</span>
+          <div class="art-item-body" data-project-id="article-228-analysis">
+            <h3>Article 228 Sentencing Analysis</h3>
+            <p>The data behind a study of how Russia jails drug users under Article 228. I built the parsing and analysis — the charts and the figures — across 34,000 court verdicts (plus 2,389 hand-coded across 46 regions), revealing that nearly half of those imprisoned were first-time offenders.</p>
+            <p class="art-collab">Institute for Human Rights</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">02</span>
+          <div class="art-item-body" data-project-id="un-treaty-submissions">
+            <h3>UN Treaty Body Submissions</h3>
+            <p>Co-authored submissions to UN treaty bodies and coordinated the monitoring that collected cases of convention violations against drug users — 20 submissions to 5 bodies (CAT, Human Rights Committee, CEDAW, CESCR, CRPD), 2010–2023, several reflected in the committees' concluding observations on Russia.</p>
+            <p class="art-collab">Andrey Rylkov Foundation</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">03</span>
+          <div class="art-item-body" data-project-id="drug-policy-reform">
+            <h3>Drug Policy Reform</h3>
+            <p>A drug-policy reform resource I wrote and designed end to end — laying out, from the perspective of people who use drugs, what's broken in Russia's drug laws and exactly how to fix it.</p>
+            <p class="art-collab">drugpolicyreform.tilda.ws</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">04</span>
+          <div class="art-item-body" data-project-id="selected-writing">
+            <h3>Selected Writing</h3>
+            <p>As Teplitsa's St Petersburg coordinator I wrote on civic tech and digital strategy for NGOs, and published on climate and civil society in openDemocracy.</p>
+            <p class="art-collab">Teplitsa · openDemocracy</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- PANEL: EVENTS & CAMPAIGNS -->
+  <div class="featured-panel" id="panel-events">
+    <section class="artivism" id="events">
+      <div class="artivism-sticky">
+        <span class="artivism-num-big">04</span>
+        <h2 class="artivism-title">EVENTS<br>&amp;<br>CAMPAIGNS</h2>
+        <p class="artivism-desc">Public events, campaigns, and collective actions — from street interventions to institutional programming.</p>
+      </div>
+
+      <div class="artivism-list">
+
+        <div class="art-item reveal">
+          <span class="art-n">01</span>
+          <div class="art-item-body" data-project-id="arctic-30">
+            <h3>Arctic 30</h3>
+            <p>One of the leaders of the campaign supporting the Arctic 30 — the Greenpeace crew detained in Murmansk in 2013.</p>
+            <p class="art-collab">Ecodefense</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">02</span>
+          <div class="art-item-body" data-project-id="ags-murmansk">
+            <h3>Right to Alternative Civilian Service, Murmansk</h3>
+            <p>Led a campaign for the right to alternative civilian service in Murmansk region — after which the region became one of Russia's leaders by number of AGS applications.</p>
+            <p class="art-collab">Murmansk region</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">03</span>
+          <div class="art-item-body" data-project-id="nikita-konev">
+            <h3>Nikita Konev</h3>
+            <p>Led the support campaign for Nikita Konev, a Murmansk conscientious objector fighting for his right to alternative civilian service.</p>
+            <p class="art-collab">Murmansk region</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">04</span>
+          <div class="art-item-body" data-project-id="raskhodchikov">
+            <h3>Alexey Raskhodchikov</h3>
+            <p>Led the campaign in defence of Murmansk activist Alexey Raskhodchikov, charged with wounding a police officer — publishing his account of the arrest and rallying public support.</p>
+            <p class="art-collab">7×7</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">05</span>
+          <div class="art-item-body" data-project-id="rave-not-raid">
+            <h3>Rave Not Raid</h3>
+            <p>A campaign against police violence during nightclub raids — community organizing, public art actions, and a Telegram bot delivering real-time legal help.</p>
+            <p class="art-collab">Andrey Rylkov Foundation</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">06</span>
+          <div class="art-item-body" data-project-id="care-tent">
+            <h3>Care Tent</h3>
+            <p>Co-founded a harm-reduction and mental-health service operating at major music festivals — making festival culture a space for care and safety.</p>
+            <p class="art-collab">Trava Collective × ARF</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">07</span>
+          <div class="art-item-body" data-project-id="barents-eco-art">
+            <h3>Barents Eco-Art Academies</h3>
+            <p>Coordinated two international youth programs across the Barents region (Russia, Norway, Germany), connecting environmental action with artistic practice.</p>
+            <p class="art-collab">Nature and Youth</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">08</span>
+          <div class="art-item-body" data-project-id="civic-tech-hackathons">
+            <h3>Civic-Tech Hackathons</h3>
+            <p>Co-organized civic-tech hackathons connecting developers and NGOs: Krasnoyarsk, 4SPb, and the Open Big Data Hackathon (2017).</p>
+            <p class="art-collab">Teplitsa</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">09</span>
+          <div class="art-item-body" data-project-id="online-events">
+            <h3>Online Events &amp; Webinars</h3>
+            <p>Organized and hosted online events and webinars for civil-society audiences.</p>
+            <p class="art-collab">—</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">10</span>
+          <div class="art-item-body" data-project-id="world-drug-report-2020">
+            <h3>World Drug Report 2020 Launch</h3>
+            <p>Co-organized the presentation of the UN World Drug Report 2020 for NGOs.</p>
+            <p class="art-collab">ISSUP</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">11</span>
+          <div class="art-item-body" data-project-id="soldiers-mothers-legal">
+            <h3>Soldiers' Mothers Legal Education</h3>
+            <p>Ran a legal-practice program and ECHR seminars with Soldiers' Mothers of St Petersburg.</p>
+            <p class="art-collab">Soldiers' Mothers of St Petersburg</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+        <div class="art-item reveal">
+          <span class="art-n">12</span>
+          <div class="art-item-body" data-project-id="support-dont-punish">
+            <h3>Support Don't Punish</h3>
+            <p>Organized Support Don't Punish actions with Trava.</p>
+            <p class="art-collab">Trava</p>
+            <div class="art-item-images" data-images>
+              <!-- Add images programmatically: container.appendChild(img) -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+</section>
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <p class="section-num">03 — Experience</p>
+  <h2 class="section-heading reveal">CIVIL<br>SOCIETY</h2>
+
+  <!-- FEATURED RESULTS -->
+  <div class="featured-results reveal">
+    <p class="results-label">Featured Results</p>
+    <div class="results-grid">
+      <div class="result-cell"><div class="result-num">15+</div><div class="result-label">Years in<br>civil society</div></div>
+      <div class="result-cell"><div class="result-num">34,000</div><div class="result-label">Court verdicts<br>parsed</div></div>
+      <div class="result-cell"><div class="result-num">20</div><div class="result-label">UN submissions ·<br>5 treaty bodies</div></div>
+      <div class="result-cell"><div class="result-num">5</div><div class="result-label">Top media outlets<br>published in</div></div>
+      <div class="result-cell"><div class="result-num">3</div><div class="result-label">Civic-tech hackathons<br>co-organized</div></div>
+      <div class="result-cell"><div class="result-num">#1</div><div class="result-label">Murmansk region<br>by AGS applications</div></div>
+    </div>
+  </div>
+
+  <div class="exp-tooltip" id="expTooltip">
+    <div class="exp-tooltip-role" id="ttRole"></div>
+    <div class="exp-tooltip-org" id="ttOrg"></div>
+    <div class="exp-tooltip-desc" id="ttDesc"></div>
+    <div class="exp-tooltip-dates" id="ttDates"></div>
+  </div>
+
+  <div class="exp-timeline-wrap" id="expWrap">
+    <div class="exp-timeline-inner">
+      <div class="exp-axis">
+
+        <div class="exp-axis-dot-now"></div>
+
+        <!-- Year labels — absolutely positioned below all cards -->
+        <div class="exp-years">
+          <span class="exp-year" style="left:0%">2006</span>
+          <span class="exp-year" style="left:10%">2008</span>
+          <span class="exp-year" style="left:20%">2010</span>
+          <span class="exp-year" style="left:30%">2012</span>
+          <span class="exp-year" style="left:40%">2014</span>
+          <span class="exp-year" style="left:50%">2016</span>
+          <span class="exp-year" style="left:60%">2018</span>
+          <span class="exp-year" style="left:70%">2020</span>
+          <span class="exp-year" style="left:80%">2022</span>
+          <span class="exp-year" style="left:90%">2024</span>
+          <span class="exp-year" style="left:100%">2026</span>
+        </div>
+
+        <!--
+          Scale: 2006–2026 = 20yr = 100%
+          left% = (startYear - 2006) / 20 * 100
+          width% = duration / 20 * 100
+          ABOVE: bottom = distance from axis upward
+          BELOW: top = distance from axis downward
+          Each card's stem runs from the axis line to the card; every dot sits
+          5px above the line (centers at y:-5px), so all dots share one horizontal.
+          Year labels sit just under the line (.exp-years top:8px).
+          Rows above: r1=bottom:14px, r2=bottom:110px, r3=bottom:210px
+          Rows below: r1=top:30px,    r2=top:126px (year band kept clear under line)
+        -->
+
+        <!-- MURMANSK MEMORIAL 2006–2015: 0%–45% — ABOVE r1 -->
+        <div class="exp-card"
+          style="left:0%;width:44%;bottom:14px;"
+          data-role="Volunteer" data-org="Murmansk Memorial"
+          data-dates="2006 – 2015"
+          data-desc="Supported public events, educational tours, and seminars on Soviet repression and human rights. Assisted conscripts and conscientious objectors. Coordinated campaigns promoting alternative civil service.">
+          <div class="exp-card-org">Murmansk Memorial</div>
+          <div class="exp-card-role">Volunteer</div>
+          <div class="exp-card-dates">2006 – 2015</div>
+        </div>
+        <div class="exp-stem" style="left:3%;bottom:0;height:14px;"></div>
+        <div class="exp-dot" style="left:2.65%;top:-8.5px;"></div>
+
+        <!-- 7x7 2012–2015: 30%–45% — ABOVE r2 -->
+        <div class="exp-card"
+          style="left:30%;width:15%;bottom:110px;"
+          data-role="Regional Coordinator / Journalist" data-org="Internet Magazine «7×7»"
+          data-dates="2012 – 2015"
+          data-desc="Reported on civil society, protests, political persecution, and court proceedings. Developed regional operations and recruited contributors. Covered investigative topics across Russia.">
+          <div class="exp-card-org">7×7</div>
+          <div class="exp-card-role">Journalist</div>
+          <div class="exp-card-dates">2012 – 2015</div>
+        </div>
+        <div class="exp-stem" style="left:33%;bottom:0;height:110px;"></div>
+        <div class="exp-dot" style="left:32.65%;top:-8.5px;"></div>
+
+        <!-- NATURE & YOUTH 2012–2015: 30%–45% — ABOVE r3 -->
+        <div class="exp-card"
+          style="left:30%;width:15%;bottom:210px;"
+          data-role="Executive Director" data-org="Nature and Youth"
+          data-dates="2012 – 2015"
+          data-desc="Led organizational operations including fundraising and strategic planning. Coordinated two Barents Eco-Art Academies. Managed international youth exchanges with Germany and Norway. Supported the Arctic 30 Greenpeace campaign.">
+          <div class="exp-card-org">Nature & Youth</div>
+          <div class="exp-card-role">Exec. Director</div>
+          <div class="exp-card-dates">2012 – 2015</div>
+        </div>
+        <div class="exp-stem" style="left:36%;bottom:0;height:210px;"></div>
+        <div class="exp-dot" style="left:35.65%;top:-8.5px;"></div>
+
+        <!-- TEPLITSA 2016–2018: 50%–60% — ABOVE r1 -->
+        <div class="exp-card"
+          style="left:50%;width:10%;bottom:14px;"
+          data-role="Coordinator, Saint Petersburg" data-org="Teplitsa — Technologies for Social Good"
+          data-dates="2016 – 2018"
+          data-desc="Organized educational events and hackathons for NGOs. Advised organizations on digital tools and communications strategy. Authored practical articles for activists published on te-st.org.">
+          <div class="exp-card-org">Teplitsa</div>
+          <div class="exp-card-role">Coordinator</div>
+          <div class="exp-card-dates">2016 – 2018</div>
+        </div>
+        <div class="exp-stem" style="left:53%;bottom:0;height:14px;"></div>
+        <div class="exp-dot" style="left:52.65%;top:-8.5px;"></div>
+
+        <!-- SOLDIERS MOTHERS 2016–2019: 50%–65% — ABOVE r2 -->
+        <div class="exp-card"
+          style="left:50%;width:15%;bottom:110px;"
+          data-role="Project Coordinator" data-org="Soldiers' Mothers of Saint Petersburg"
+          data-dates="2016 – 2019"
+          data-desc="Coordinated human rights projects and internship programs for law students. Produced video content and conducted interviews with international anti-militarist activists. Represented the organization at the Asia-Europe Peoples' Forum.">
+          <div class="exp-card-org">Soldiers' Mothers</div>
+          <div class="exp-card-role">Project Coord.</div>
+          <div class="exp-card-dates">2016 – 2019</div>
+        </div>
+        <div class="exp-stem" style="left:55%;bottom:0;height:110px;"></div>
+        <div class="exp-dot" style="left:54.65%;top:-8.5px;"></div>
+
+        <!-- FREELANCE 2023–now: 85%–100% — ABOVE r1 -->
+        <div class="exp-card"
+          style="left:85%;width:15%;bottom:14px;"
+          data-role="Freelance & Volunteering" data-org="Various"
+          data-dates="2023 – present"
+          data-desc="Hand-Help: managed Telegram channel on drug policy. Conducted judicial practice analysis under Article 228 using Python. Peace Plea: analytics on persecution of war refusers. Content creation and design for Domingo's and Tilly's.">
+          <div class="exp-card-org">Freelance</div>
+          <div class="exp-card-role">Various</div>
+          <div class="exp-card-dates">2023 – now</div>
+        </div>
+        <div class="exp-stem" style="left:88%;bottom:0;height:14px;"></div>
+        <div class="exp-dot" style="left:87.65%;top:-8.5px;"></div>
+
+        <!-- GOLOS 2012: 30% — BELOW r1 -->
+        <div class="exp-card"
+          style="left:30%;width:10%;top:30px;"
+          data-role="Coordinator, Murmansk" data-org="Golos — Election Monitoring Association"
+          data-dates="2012"
+          data-desc="Coordinated election monitoring activities including observer training and deployment. Prepared public reporting on election-day monitoring results.">
+          <div class="exp-card-org">Golos</div>
+          <div class="exp-card-role">Monitor Coord.</div>
+          <div class="exp-card-dates">2012</div>
+        </div>
+        <div class="exp-stem" style="left:34%;top:0;height:30px;"></div>
+        <div class="exp-dot" style="left:33.65%;top:-8.5px;"></div>
+
+        <!-- HR HOUSE VORONEZH 2015–2016: 45%–50% — BELOW r1 -->
+        <div class="exp-card"
+          style="left:45%;width:10%;top:30px;"
+          data-role="Head of Media" data-org="Human Rights House — Voronezh"
+          data-dates="2015 – 2016"
+          data-desc="Managed communications and public relations, producing video and written case documentation. Organized events and festivals to support outreach and engagement.">
+          <div class="exp-card-org">HR House Voronezh</div>
+          <div class="exp-card-role">Head of Media</div>
+          <div class="exp-card-dates">2015 – 2016</div>
+        </div>
+        <div class="exp-stem" style="left:48%;top:0;height:30px;"></div>
+        <div class="exp-dot" style="left:47.65%;top:-8.5px;"></div>
+
+        <!-- TRAVA 2018–2022: 60%–80% — BELOW r1 -->
+        <div class="exp-card"
+          style="left:60%;width:20%;top:30px;"
+          data-role="Event Manager / Consultant" data-org="Trava Collective"
+          data-dates="2018 – 2022"
+          data-desc="Co-created the '100 Year Man' human rights walking tour with Amnesty International. Organized conferences, workshops, screenings, exhibitions. Contributed to the 'School of the Citizen' curriculum. Helped launch the Care Tent initiative.">
+          <div class="exp-card-org">Trava</div>
+          <div class="exp-card-role">Event Manager</div>
+          <div class="exp-card-dates">2018 – 2022</div>
+        </div>
+        <div class="exp-stem" style="left:63%;top:0;height:30px;"></div>
+        <div class="exp-dot" style="left:62.65%;top:-8.5px;"></div>
+
+        <!-- ARF 2018–2024: 60%–90% — BELOW r2 — GOLD -->
+        <div class="exp-card gold"
+          style="left:60%;width:30%;top:126px;"
+          data-role="Head of Advocacy" data-org="Andrey Rylkov Foundation"
+          data-dates="2018 – 2024"
+          data-desc="Led multi-year advocacy campaigns on harm reduction, drug policy, and human rights. Prepared shadow reports to UN treaty bodies including CEDAW. Organized international briefings and monitoring missions. Led 'Rave Not Raid' campaign with real-time legal Telegram bot.">
+          <div class="exp-card-org">Andrey Rylkov Foundation</div>
+          <div class="exp-card-role">Head of Advocacy</div>
+          <div class="exp-card-dates">2018 – 2024</div>
+        </div>
+        <div class="exp-stem gold" style="left:73%;top:0;height:126px;"></div>
+        <div class="exp-dot gold" style="left:72.65%;top:-8.5px;"></div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <p class="section-num" style="grid-column: 1 / -1;">04 — Skills</p>
+  <div class="skill-col reveal">
+    <h4>Projects &amp; Technology</h4>
+    <ul>
+      <li>Event &amp; program management</li>
+      <li>Google Workspace, Asana, Slack</li>
+      <li>Telegram bot development</li>
+      <li>Python for data analysis</li>
+      <li>Basic web development</li>
+      <li>Digital strategy for NGOs</li>
+    </ul>
+  </div>
+  <div class="skill-col reveal">
+    <h4>Advocacy &amp; Organizing</h4>
+    <ul>
+      <li>UN treaty body reporting</li>
+      <li>Grassroots campaign coordination</li>
+      <li>Community mobilization</li>
+      <li>Legal research &amp; monitoring</li>
+      <li>International stakeholder relations</li>
+      <li>Strategic litigation support</li>
+    </ul>
+  </div>
+  <div class="skill-col reveal">
+    <h4>Photography &amp; Media</h4>
+    <ul>
+      <li>Documentary photojournalism</li>
+      <li>Portrait &amp; environmental</li>
+      <li>Video production &amp; editing</li>
+      <li>Soundscape recording</li>
+      <li>Multimedia storytelling</li>
+      <li>AI-assisted content &amp; design</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div>
+      <h2 class="contact-title">LET'S<br>WORK<br>TOGETHER</h2>
+      <p class="contact-sub">Open to full-time and freelance work in human rights, campaigns, and documentary photography.</p>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:jimblach@gmail.com" class="contact-link">
+        <span>Email</span>
+        <span>jimblach@gmail.com</span>
+      </a>
+      <a href="https://t.me/paika4" class="contact-link">
+        <span>Telegram</span>
+        <span>@paika4</span>
+      </a>
+      <a href="https://readymag.com/u72404562/4518233/" class="contact-link">
+        <span>Photography Portfolio</span>
+        <span>readymag.com</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Gleb Paikachev · Organizer, Program Manager &amp; Documentary Photographer</span>
+  <span>jimblach@gmail.com</span>
+</footer>
+
+<script>
+// Lightbox for artivism images
+const lb = document.createElement('div');
+lb.className = 'art-img-lightbox';
+const lbImg = document.createElement('img');
+const lbCap = document.createElement('div');
+lbCap.className = 'art-img-lightbox-caption';
+lb.appendChild(lbImg); lb.appendChild(lbCap);
+document.body.appendChild(lb);
+lb.addEventListener('click', () => lb.classList.remove('open'));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+
+// Delegate click on any .art-img-thumb added dynamically
+document.addEventListener('click', e => {
+  if (e.target.matches('.art-img-thumb')) {
+    lbImg.src = e.target.src;
+    lbCap.textContent = e.target.alt || '';
+    lb.classList.add('open');
+  }
+});
+
+// Helper: attach images to a project by slug
+// Usage: addProjectImages('rave-not-raid', ['img1.jpg', 'img2.jpg'])
+// Or with img elements: addProjectImages('care-tent', [imgElement])
+window.addProjectImages = function(projectId, images) {
+  const body = document.querySelector(`[data-project-id="${projectId}"]`);
+  if (!body) return console.warn('Project not found:', projectId);
+  const zone = body.querySelector('[data-images]');
+  images.forEach(src => {
+    const img = document.createElement('img');
+    img.className = 'art-img-thumb';
+    img.src = typeof src === 'string' ? src : src.src;
+    img.alt = typeof src === 'string' ? '' : (src.alt || '');
+    zone.appendChild(img);
+  });
+};
+
+// Timeline tooltip + drag scroll
+(function() {
+  const tooltip = document.getElementById('expTooltip');
+  const ttRole  = document.getElementById('ttRole');
+  const ttOrg   = document.getElementById('ttOrg');
+  const ttDesc  = document.getElementById('ttDesc');
+  const ttDates = document.getElementById('ttDates');
+
+  document.querySelectorAll('.exp-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      ttRole.textContent  = card.dataset.role  || '';
+      ttOrg.textContent   = card.dataset.org   || '';
+      ttDesc.textContent  = card.dataset.desc  || '';
+      ttDates.textContent = card.dataset.dates || '';
+      tooltip.classList.add('visible');
+    });
+    card.addEventListener('mousemove', e => {
+      const x = e.clientX + 18;
+      const y = e.clientY + 18;
+      const tw = tooltip.offsetWidth;
+      const th = tooltip.offsetHeight;
+      tooltip.style.left = (x + tw > window.innerWidth ? e.clientX - tw - 18 : x) + 'px';
+      tooltip.style.top  = (y + th > window.innerHeight ? e.clientY - th - 18 : y) + 'px';
+    });
+    card.addEventListener('mouseleave', () => tooltip.classList.remove('visible'));
+  });
+
+  // Drag to scroll timeline
+  const wrap = document.getElementById('expWrap');
+  if (wrap) {
+    let isDown = false, startX, scrollLeft;
+    wrap.addEventListener('mousedown', e => {
+      isDown = true;
+      startX = e.pageX - wrap.offsetLeft;
+      scrollLeft = wrap.scrollLeft;
+    });
+    wrap.addEventListener('mouseleave', () => isDown = false);
+    wrap.addEventListener('mouseup',    () => isDown = false);
+    wrap.addEventListener('mousemove',  e => {
+      if (!isDown) return;
+      e.preventDefault();
+      wrap.scrollLeft = scrollLeft - (e.pageX - wrap.offsetLeft - startX);
+    });
+  }
+})();
+
+// Featured tabs
+document.querySelectorAll('.featured-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = tab.dataset.tab;
+    document.querySelectorAll('.featured-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.featured-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + target).classList.add('active');
+    // re-trigger reveal animations for newly shown panel
+    document.querySelectorAll('#panel-' + target + ' .reveal').forEach(el => {
+      el.classList.remove('visible');
+      setTimeout(() => el.classList.add('visible'), 50);
+    });
+    // обновляем sticky и видимость при переключении вкладки
+    const featuredTabs = document.querySelector('.featured-tabs');
+    if (featuredTabs) {
+      const isPhoto = target === 'photography';
+      featuredTabs.classList.toggle('tabs-flow', isPhoto);
+      featuredTabs.classList.remove('tabs-hidden');
+      // сентинел — обычный div без sticky, scrollIntoView всегда берёт его натуральную позицию
+      // scroll-margin-top: 3.75rem компенсирует высоту фиксированного нава
+      requestAnimationFrame(() => {
+        document.getElementById('tabs-sentinel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  });
+});
+
+// Скрываем вкладки Featured как только начинается следующий блок (кроме раздела photography)
+(function () {
+  const tabs = document.querySelector('.featured-tabs');
+  const next = document.getElementById('experience');
+  if (!tabs || !next) return;
+  new IntersectionObserver(([e]) => {
+    const activeTab = document.querySelector('.featured-tab.active');
+    const isPhoto = activeTab && activeTab.dataset.tab === 'photography';
+    tabs.classList.toggle('tabs-hidden', e.isIntersecting && !isPhoto);
+  }, { threshold: 0 }).observe(next);
+})();
+
+// Cursor (только для устройств с мышью)
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Documentary photo blocks
+document.querySelectorAll('.photo-cell').forEach(cell => {
+  const directImages = Array.from(cell.querySelectorAll(':scope > img'));
+  const slides = directImages.length ? directImages : Array.from(cell.querySelectorAll(':scope > .photo-inner'));
+  let current = 0;
+
+  if (!slides.length) return;
+
+  if (directImages.length) {
+    cell.classList.add('has-media');
+  }
+
+  const showSlide = index => {
+    current = (index + slides.length) % slides.length;
+    slides.forEach((slide, i) => slide.classList.toggle('is-active', i === current));
+  };
+
+  if (cell.hasAttribute('data-auto-carousel')) {
+    showSlide(0);
+    setInterval(() => showSlide(current + 1), 3200);
+    return;
+  }
+
+  const nav = document.createElement('div');
+  nav.className = 'photo-cell-nav';
+  nav.innerHTML = `
+    <button class="photo-cell-btn" type="button" aria-label="Previous photo">←</button>
+    <button class="photo-cell-btn" type="button" aria-label="Next photo">→</button>
+  `;
+  cell.appendChild(nav);
+
+  const [prev, next] = nav.querySelectorAll('button');
+  prev.addEventListener('click', () => showSlide(current - 1));
+  next.addEventListener('click', () => showSlide(current + 1));
+
+  showSlide(0);
+});
+
+const projectTextBlock = document.querySelector('[data-project-text] .photo-text-copy');
+const defaultProjectText = projectTextBlock ? projectTextBlock.textContent : '';
+
+document.querySelectorAll('.photo-cell[data-project-description]').forEach(cell => {
+  const showDescription = () => {
+    if (projectTextBlock) projectTextBlock.textContent = cell.dataset.projectDescription;
+  };
+
+  const showDefault = () => {
+    if (projectTextBlock) projectTextBlock.textContent = defaultProjectText;
+  };
+
+  cell.addEventListener('mouseenter', showDescription);
+  cell.addEventListener('focusin', showDescription);
+  cell.addEventListener('mouseleave', showDefault);
+  cell.addEventListener('focusout', showDefault);
+});
+
+document.querySelectorAll('.photo-cell > img, .photo-inner img').forEach(img => {
+  const setPhotoFit = () => {
+    img.classList.toggle('is-vertical', img.naturalHeight > img.naturalWidth);
+  };
+
+  if (img.complete) {
+    setPhotoFit();
+  } else {
+    img.addEventListener('load', setPhotoFit, { once: true });
+  }
+});
+</script>
+</body>
+</html>

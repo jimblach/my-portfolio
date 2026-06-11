@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="730" viewBox="0 0 1000 730">
+<rect width="1000" height="730" fill="#0c0c0c"/>
+<text x="500" y="24" font-family="monospace" font-size="10" fill="#555" text-anchor="middle">07 — ТРИ ЗОНЫ · мелко / доминанта / мелко, разные ритмы</text>
+
+<!-- ZONE 1: top, 3 tight small cells at staggered heights -->
+<rect x="40" y="38" width="256" height="144" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="168" y="110" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M1 · 256×144</text>
+
+<rect x="300" y="60" width="320" height="180" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="460" y="150" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M2 · 320×180</text>
+
+<rect x="624" y="38" width="336" height="189" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="792" y="133" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M3 · 336×189</text>
+
+<!-- ZONE 2: center, ONE huge cell + fillers -->
+<!-- M4: 640×360 · 16:9 · DOMINANT -->
+<rect x="180" y="246" width="640" height="360" fill="#1a1a1a" stroke="#d6ac48" stroke-width="2"/>
+<text x="500" y="426" font-family="monospace" font-size="15" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M4 · ДОМИНАНТА · 640×360</text>
+
+<!-- AUTO: 9:16 · left of M4 -->
+<rect x="40" y="246" width="136" height="244" fill="#141000" stroke="#cc9900" stroke-width="1.5"/>
+<text x="108" y="360" font-family="monospace" font-size="10" fill="#ddbb44" text-anchor="middle" dominant-baseline="middle">AUTO</text>
+<text x="108" y="375" font-family="monospace" font-size="9" fill="#664" text-anchor="middle">9:16</text>
+
+<!-- TEXT: right of M4 -->
+<rect x="824" y="246" width="136" height="165" fill="#0f0f22" stroke="#7777ee" stroke-width="1.5"/>
+<text x="892" y="321" font-family="monospace" font-size="10" fill="#aaaaff" text-anchor="middle" dominant-baseline="middle">TEXT</text>
+<text x="892" y="337" font-family="monospace" font-size="9" fill="#aaaaff" opacity="0.6" text-anchor="middle">≈30 слов</text>
+
+<!-- WIDE: right below TEXT -->
+<rect x="824" y="415" width="136" height="191" fill="#0c1310" stroke="#229966" stroke-width="1.5"/>
+<text x="892" y="507" font-family="monospace" font-size="10" fill="#44bb88" text-anchor="middle" dominant-baseline="middle">WIDE</text>
+
+<!-- ZONE 3: bottom, 3 small cells again -->
+<rect x="40" y="494" width="136" height="196" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="108" y="592" font-family="monospace" font-size="9" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M5</text>
+
+<rect x="180" y="610" width="640" height="80" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="500" y="650" font-family="monospace" font-size="11" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M6 · финальная широкая полоска</text>
+
+<rect x="824" y="610" width="136" height="80" fill="#1a1a1a" stroke="#d6ac48" stroke-width="1.5"/>
+<text x="892" y="650" font-family="monospace" font-size="9" fill="#d6ac48" text-anchor="middle" dominant-baseline="middle">M7</text>
+
+<g font-family="monospace" font-size="9" fill="#444">
+  <rect x="40" y="706" width="9" height="9" fill="#d6ac48"/><text x="54" y="714">16:9</text>
+  <rect x="105" y="706" width="9" height="9" fill="#7777ee"/><text x="119" y="714">TEXT</text>
+  <rect x="175" y="706" width="9" height="9" fill="#cc9900"/><text x="189" y="714">AUTO 9:16</text>
+  <rect x="290" y="706" width="9" height="9" fill="#229966"/><text x="304" y="714">WIDE</text>
+</g>
+</svg>
